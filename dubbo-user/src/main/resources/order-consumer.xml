@@ -12,14 +12,11 @@
 
     <!--dubbo这个服务所要暴露的服务地址所对应的注册中心-->
     <dubbo:registry address="N/A"/>
-    <!--<dubbo:registry address="zookeeper://192.168.137.101:2181?backup=192.168.137.102:2181,192.168.137.103:2181,192.168.137.104:2181"/>-->
 
     <!--当前服务发布所依赖的协议：webservice,Thrift,Hession,Http-->
     <dubbo:protocol name="dubbo" port="20880"/>
 
-    <!--服务发布的地址，需要暴露的服务接口,超时时间为 3 秒-->
-    <dubbo:service interface="com.funi.distributedcomputer.dubbo.order.IOrderService"
-                   ref="orderService" timeout="3000"/>
-    <!--Bean bean定义-->
-    <bean id="orderService" class="com.funi.distributedcomputer.dubbo.order.OrderServiceImpl"/>
+    <!--生成一个远程服务的调用代理-->
+    <dubbo:reference interface="com.funi.distributedcomputer.dubbo.order.IOrderService" id="orderService"
+                     url="dubbo://192.168.137.1:20880/com.funi.distributedcomputer.dubbo.order.IOrderService"/>
 </beans>

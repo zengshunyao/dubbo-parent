@@ -37,7 +37,38 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
-            <version>2.6.2</version>
+            <!--<version>2.6.2</version>-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <!--<exclusions>-->
+            <!--<exclusion>-->
+            <!--&lt;!&ndash;log4j:log4j:1.2.14&ndash;&gt;-->
+            <!--<groupId>log4j</groupId>-->
+            <!--<artifactId>log4j</artifactId>-->
+            <!--</exclusion>-->
+            <!--</exclusions>-->
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>log4j</groupId>-->
+        <!--<artifactId>log4j</artifactId>-->
+        <!--&lt;!&ndash;<version>1.2.15</version>&ndash;&gt;-->
+        <!--</dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <!--<version>4.0.1</version>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <!--<version>3.4.9</version>-->
         </dependency>
 
     </dependencies>
