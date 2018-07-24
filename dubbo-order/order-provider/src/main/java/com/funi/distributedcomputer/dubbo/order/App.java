@@ -5,6 +5,7 @@ import com.alibaba.dubbo.container.Main;
 
 /**
  * Hello world!
+ * 服务启动
  */
 public class App {
     public static void main(String[] args) {
