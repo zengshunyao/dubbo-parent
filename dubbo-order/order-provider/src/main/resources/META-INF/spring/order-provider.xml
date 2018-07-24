@@ -10,6 +10,7 @@
     <!--当前项目在整个分布式架构里面的唯一名称，计算依赖关系的标签-->
     <dubbo:application name="order-provider" owner="bug"/>
 
+    <dubbo:monitor protocol="registry"/>
     <!--dubbo这个服务所要暴露的服务地址所对应的注册中心-->
     <!--<dubbo:registry address="N/A"/>-->
     <dubbo:registry address="zookeeper://192.168.137.101:2181?backup=192.168.137.102:2181,192.168.137.103:2181,192.168.137.104:2181"/>

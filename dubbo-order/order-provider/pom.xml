@@ -40,17 +40,17 @@
             <!--<version>2.6.2</version>-->
         </dependency>
 
-        <dependency>
-            <groupId>com.github.sgroschupf</groupId>
-            <artifactId>zkclient</artifactId>
-            <!--<exclusions>-->
-            <!--<exclusion>-->
-            <!--&lt;!&ndash;log4j:log4j:1.2.14&ndash;&gt;-->
-            <!--<groupId>log4j</groupId>-->
-            <!--<artifactId>log4j</artifactId>-->
-            <!--</exclusion>-->
-            <!--</exclusions>-->
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.sgroschupf</groupId>-->
+            <!--<artifactId>zkclient</artifactId>-->
+            <!--&lt;!&ndash;<exclusions>&ndash;&gt;-->
+            <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;log4j:log4j:1.2.14&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<groupId>log4j</groupId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<artifactId>log4j</artifactId>&ndash;&gt;-->
+            <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
+            <!--&lt;!&ndash;</exclusions>&ndash;&gt;-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
         <!--<groupId>log4j</groupId>-->
