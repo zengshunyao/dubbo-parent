@@ -72,18 +72,16 @@
             <!--<version>3.4.9</version>-->
         </dependency>
 
-<<<<<<< HEAD
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <!--<version>1.2.47</version>-->
-=======
+        </dependency>
         <!--hessian-->
         <dependency>
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
             <!--<version>4.0.38</version>-->
->>>>>>> fe4eb60bdc279cb73b165c3572a0fee39eb6f5b6
         </dependency>
     </dependencies>
 
