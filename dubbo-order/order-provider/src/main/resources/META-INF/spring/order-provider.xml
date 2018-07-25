@@ -18,9 +18,11 @@
     <!--当前服务发布所依赖的协议：webservice,Thrift,Hession,Http-->
     <dubbo:protocol name="dubbo" port="20880"/>
 
+    <!--增加hessian协议-->
+    <dubbo:protocol name="hessian" port="8090" server="jetty"/>
     <!--服务发布的地址，需要暴露的服务接口,超时时间为 3 秒-->
     <dubbo:service interface="com.funi.distributedcomputer.dubbo.order.IOrderService"
-                   ref="orderService" timeout="3000"/>
+                   ref="orderService" timeout="3000" protocol="hessian"/>
     <!--Bean bean定义-->
     <bean id="orderService" class="com.funi.distributedcomputer.dubbo.order.OrderServiceImpl"/>
 </beans>
