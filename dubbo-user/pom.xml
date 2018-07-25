@@ -42,20 +42,20 @@
 
         <!-- https://mvnrepository.com/artifact/com.github.sgroschupf/zkclient -->
         <!--<dependency>-->
-            <!--<groupId>com.github.sgroschupf</groupId>-->
-            <!--<artifactId>zkclient</artifactId>-->
-            <!--<version>0.1</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.apache.zookeeper</groupId>-->
-                    <!--<artifactId>zookeeper</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--&lt;!&ndash;log4j:log4j:1.2.14&ndash;&gt;-->
-                    <!--<groupId>log4j</groupId>-->
-                    <!--<artifactId>log4j</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+        <!--<groupId>com.github.sgroschupf</groupId>-->
+        <!--<artifactId>zkclient</artifactId>-->
+        <!--<version>0.1</version>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<groupId>org.apache.zookeeper</groupId>-->
+        <!--<artifactId>zookeeper</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--&lt;!&ndash;log4j:log4j:1.2.14&ndash;&gt;-->
+        <!--<groupId>log4j</groupId>-->
+        <!--<artifactId>log4j</artifactId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
         <!--</dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
@@ -93,6 +93,11 @@
         <!--<artifactId>log4j</artifactId>-->
         <!--<version>1.2.15</version>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>4.0.38</version>
+        </dependency>
     </dependencies>
 
     <build>
