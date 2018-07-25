@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
  * Copyright ChengDu Funi Cloud Code Technology Development CO.,LTD 2014
  *                    All Rights Reserved.
  */
-@Service("orderService")
-public class OrderServiceImpl implements IOrderService {
+@Service("orderService2")
+public class OrderServiceImpl2 implements IOrderService {
 
     @Override
     public DoOrderResponse doOrder(DoOrderRequest doOrderRequest) {
-        System.out.println("曾经来过：" + doOrderRequest);
+        System.out.println("曾经来过：2.0版本" + doOrderRequest);
         DoOrderResponse response = new DoOrderResponse();
         response.setCode("200");
-        response.setMemo("处理成功");
+        response.setMemo("处理成功2.0版本");
         response.setData(null);
         return response;
     }
