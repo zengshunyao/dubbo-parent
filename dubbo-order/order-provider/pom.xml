@@ -41,15 +41,15 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>com.github.sgroschupf</groupId>-->
-            <!--<artifactId>zkclient</artifactId>-->
-            <!--&lt;!&ndash;<exclusions>&ndash;&gt;-->
-            <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;log4j:log4j:1.2.14&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;<groupId>log4j</groupId>&ndash;&gt;-->
-            <!--&lt;!&ndash;<artifactId>log4j</artifactId>&ndash;&gt;-->
-            <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
-            <!--&lt;!&ndash;</exclusions>&ndash;&gt;-->
+        <!--<groupId>com.github.sgroschupf</groupId>-->
+        <!--<artifactId>zkclient</artifactId>-->
+        <!--&lt;!&ndash;<exclusions>&ndash;&gt;-->
+        <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;log4j:log4j:1.2.14&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<groupId>log4j</groupId>&ndash;&gt;-->
+        <!--&lt;!&ndash;<artifactId>log4j</artifactId>&ndash;&gt;-->
+        <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
+        <!--&lt;!&ndash;</exclusions>&ndash;&gt;-->
         <!--</dependency>-->
 
         <!--<dependency>-->
@@ -65,16 +65,25 @@
             <!--<version>4.0.1</version>-->
         </dependency>
 
+        <!--zookeeper-->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
             <!--<version>3.4.9</version>-->
         </dependency>
 
+<<<<<<< HEAD
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <!--<version>1.2.47</version>-->
+=======
+        <!--hessian-->
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <!--<version>4.0.38</version>-->
+>>>>>>> fe4eb60bdc279cb73b165c3572a0fee39eb6f5b6
         </dependency>
     </dependencies>
 

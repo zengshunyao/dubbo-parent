@@ -54,11 +54,11 @@
                 <artifactId>dubbo</artifactId>
                 <version>2.6.2</version>
                 <!--<exclusions>-->
-                    <!--<exclusion>-->
-                        <!--&lt;!&ndash;commons-logging:commons-logging:1.2&ndash;&gt;-->
-                        <!--<groupId>commons-logging</groupId>-->
-                        <!--<artifactId>commons-logging</artifactId>-->
-                    <!--</exclusion>-->
+                <!--<exclusion>-->
+                <!--&lt;!&ndash;commons-logging:commons-logging:1.2&ndash;&gt;-->
+                <!--<groupId>commons-logging</groupId>-->
+                <!--<artifactId>commons-logging</artifactId>-->
+                <!--</exclusion>-->
                 <!--</exclusions>-->
             </dependency>
 
@@ -116,6 +116,7 @@
             <!--<artifactId>log4j</artifactId>-->
             <!--<version>1.2.15</version>-->
             <!--</dependency>-->
+<<<<<<< HEAD
             <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -123,6 +124,13 @@
                 <version>1.2.47</version>
             </dependency>
 
+=======
+            <dependency>
+                <groupId>com.caucho</groupId>
+                <artifactId>hessian</artifactId>
+                <version>4.0.38</version>
+            </dependency>
+>>>>>>> fe4eb60bdc279cb73b165c3572a0fee39eb6f5b6
         </dependencies>
     </dependencyManagement>
 
