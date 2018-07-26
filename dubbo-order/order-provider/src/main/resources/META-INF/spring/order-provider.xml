@@ -32,6 +32,7 @@
     <!--服务发布的地址，需要暴露的服务接口,超时时间为 3 秒-->
     <dubbo:service interface="com.funi.distributedcomputer.dubbo.order.IOrderService"
                    ref="orderService2" timeout="3000" protocol="hessian" version="2.0"/>
+    
     <!--Bean bean定义-->
     <bean id="orderService" class="com.funi.distributedcomputer.dubbo.order.OrderServiceImpl"/>
 
