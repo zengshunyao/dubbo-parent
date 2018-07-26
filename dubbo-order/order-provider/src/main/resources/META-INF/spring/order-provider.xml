@@ -3,13 +3,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo
-        http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
->
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byName">
     <!--default-autowire="byName"-->
-    <!--<context:annotation-config/>-->
-    <!--<context:component-scan base-package="com.funi.distributedcomputer.dubbo.order"/>-->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.funi.distributedcomputer.dubbo.order"/>
     <!--当前项目在整个分布式架构里面的唯一名称，计算依赖关系的标签-->
     <dubbo:application name="order-provider" owner="bug"/>
 
@@ -36,7 +37,7 @@
                    ref="orderService2" timeout="3000" protocol="dubbo" version="2.0"/>
 
     <!--Bean bean定义-->
-    <bean id="orderService" class="com.funi.distributedcomputer.dubbo.order.OrderServiceImpl"/>
+    <!--<bean id="orderService" class="com.funi.distributedcomputer.dubbo.order.OrderServiceImpl"/>-->
 
-    <bean id="orderService2" class="com.funi.distributedcomputer.dubbo.order.OrderServiceImpl2"/>
+    <!--<bean id="orderService2" class="com.funi.distributedcomputer.dubbo.order.OrderServiceImpl2"/>-->
 </beans>

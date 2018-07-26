@@ -33,7 +33,7 @@
     <dubbo:reference id="orderService2" interface="com.funi.distributedcomputer.dubbo.order.IOrderService"
                      check="false"
                      protocol="dubbo"
-                     version="2.0">
+                     version="2.0" timeout="2000">
         <dubbo:method name="doOrder" async="true"/>
     </dubbo:reference>
 </beans>
