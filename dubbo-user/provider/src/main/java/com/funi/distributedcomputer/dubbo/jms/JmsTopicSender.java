@@ -13,7 +13,7 @@ public class JmsTopicSender {
 
     public static void main(String[] args) {
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("" +
-                "tcp://192.168.11.140:61616");
+                "tcp://47.52.33.73:61616");
         Connection connection = null;
         try {
             //创建连接

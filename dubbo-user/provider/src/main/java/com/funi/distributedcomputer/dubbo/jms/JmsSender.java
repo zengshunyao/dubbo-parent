@@ -15,6 +15,9 @@ public class JmsSender {
         mytest();
     }
 
+    /**
+     * 咕泡学院的
+     */
     public static void test() {
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("" +
                 "tcp://192.168.11.140:61616");
@@ -24,7 +27,8 @@ public class JmsSender {
             connection = connectionFactory.createConnection();
             connection.start();
 
-            Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
+            //创建事物会话
+            Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
 
             //创建队列（如果队列已经存在则不会创建， first-queue是队列名称）
             //destination表示目的地
@@ -53,14 +57,15 @@ public class JmsSender {
      * 测试
      */
     public static void mytest() {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://47.52.33.73:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
         Connection connection = null;
         try {
             //创建连接
             connection = connectionFactory.createConnection("admin", "admin");
             connection.start();
 
-            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+            //创建事物会话
+            Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 
             //创建队列(如果队列已经存在则不会创建)
             //destination标识目的地
@@ -69,8 +74,11 @@ public class JmsSender {
             MessageProducer producer = session.createProducer(destination);
 
             TextMessage message = session.createTextMessage();
-            message.setText("hello world!!!");
-            producer.send(message);
+            for (int i = 0; i < 10; i++) {
+                message.setText("hello world!!!" + i);
+                producer.send(message);
+            }
+
             session.commit();
             session.close();
 
