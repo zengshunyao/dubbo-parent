@@ -22,6 +22,13 @@ public class JmsTopicReceiver {
             Destination destination = session.createTopic("first-topic");
             //创建消息消费者
             MessageConsumer consumer = session.createConsumer(destination);
+            consumer.setMessageListener(new MessageListener() {
+                @Override
+                public void onMessage(Message message) {
+                    System.out.println(message);
+                }
+            });
+
             TextMessage message = (TextMessage) consumer.receive();
             System.out.println(message.getText());
             //我消费完了 确认消息  对应Session.CLIENT_ACKNOWLEDGE

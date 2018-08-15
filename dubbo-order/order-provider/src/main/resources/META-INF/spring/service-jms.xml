@@ -30,11 +30,11 @@
          </property>
      </bean>
 
-    <!--<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
-        <!--<property name="connectionFactory" ref="connectionFactory"/>-->
-        <!--<property name="destination" ref="destination"/>-->
-        <!--<property name="messageListener" ref="messageListener"/>-->
-    <!--</bean>-->
+    <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="destination"/>
+        <property name="messageListener" ref="messageListener"/>
+    </bean>
 
-    <!--<bean id="messageListener" class="com.gupao.vip.mic.dubbo.jms.SpringJmsListener"/>-->
+    <bean id="messageListener" class="com.funi.distributedcomputer.dubbo.jms.SpringJmsListener"/>
 </beans>

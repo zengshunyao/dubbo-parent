@@ -1,7 +1,8 @@
 package com.funi.distributedcomputer.dubbo.jms;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jms.core.JmsTemplate;
+
+import java.io.IOException;
 
 /**********************************************************************
  * &lt;p&gt;文件名：${FILE_NAME} &lt;/p&gt;
@@ -19,9 +20,14 @@ public class SpringJmsReceiver {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
                 "classpath:META-INF/spring/service-jms.xml");
-        JmsTemplate jmsTemplate = context.getBean("jmsTemplate", JmsTemplate.class);
 
-        String message = (String) jmsTemplate.receiveAndConvert();
-        System.out.println(message);
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        JmsTemplate jmsTemplate = context.getBean("jmsTemplate", JmsTemplate.class);
+//        String message = (String) jmsTemplate.receiveAndConvert();
+//        System.out.println(message);
     }
 }
