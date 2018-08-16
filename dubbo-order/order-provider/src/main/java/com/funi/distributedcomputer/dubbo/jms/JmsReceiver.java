@@ -20,14 +20,14 @@ public class JmsReceiver {
     public static void main(String[] args) {
         //47.52.33.73
         ConnectionFactory connectionFactory =
-                new ActiveMQConnectionFactory("tcp://localhost:61616");
+                new ActiveMQConnectionFactory("tcp://47.52.33.73:61616");
         Connection connection = null;
         try {
             //创建连接
             connection = connectionFactory.createConnection("admin", "admin");
             connection.start();
 
-            //创建事物会话
+            //创建事物会话(事务支持事务,ack模式)
             Session session = connection.createSession(Boolean.FALSE, Session.CLIENT_ACKNOWLEDGE);
 
             //创建队列(如果队列已经存在则不会创建)
@@ -35,16 +35,16 @@ public class JmsReceiver {
             Destination destination = session.createQueue("first-queue");
             //创建消息消费者
             MessageConsumer consumer = session.createConsumer(destination);
-            for (int i = 0; i < 10; i++) {
+//            for (int i = 0; i < 10; i++) {
                 TextMessage message = (TextMessage) consumer.receive();
                 System.out.println(message.getText());
-                if (i == 4) {
-                    //我消费完了 确认消息  对应Session.CLIENT_ACKNOWLEDGE
-                    message.acknowledge();
-                }
-            }
+//                if (i == 4) {
+//                    //我消费完了 确认消息  对应Session.CLIENT_ACKNOWLEDGE
+//                    message.acknowledge();
+//                }
+//            }
 
-//            session.commit();
+            session.commit();
             session.close();
 
         } catch (JMSException e) {

@@ -26,7 +26,7 @@ public class SpringJmsSender {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
                 "classpath:META-INF/spring/service-jms.xml");
         JmsTemplate jmsTemplate = context.getBean("jmsTemplate", JmsTemplate.class);
-
+//        MessageAck m;
         jmsTemplate.send(
                 new MessageCreator() {
                     @Override

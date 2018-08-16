@@ -57,14 +57,15 @@ public class JmsSender {
      * 测试
      */
     public static void mytest() {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
+                "tcp://47.52.33.73:61616?jms.optimizeAcknowledge=true");
         Connection connection = null;
         try {
             //创建连接
             connection = connectionFactory.createConnection("admin", "admin");
             connection.start();
 
-            //创建事物会话
+            //创建事物会话 (True,ack类型 参考javax.jms.Session)
             Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 
             //创建队列(如果队列已经存在则不会创建)
