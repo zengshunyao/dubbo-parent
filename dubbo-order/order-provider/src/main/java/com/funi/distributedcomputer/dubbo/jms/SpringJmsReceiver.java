@@ -1,33 +1,32 @@
 package com.funi.distributedcomputer.dubbo.jms;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jms.core.JmsTemplate;
 
 import java.io.IOException;
 
-/**********************************************************************
- * &lt;p&gt;文件名：${FILE_NAME} &lt;/p&gt;
- * &lt;p&gt;文件描述：${DESCRIPTION}(描述该文件做什么)
- * @project_name：dubbo-order
- * @author zengshunyao
- * @date 2018/8/14 16:30
- * @history
- * @department：政务事业部
- * Copyright ChengDu Funi Cloud Code Technology Development CO.,LTD 2014
- *                    All Rights Reserved.
+/**
+ * 腾讯课堂搜索 咕泡学院
+ * 加群获取视频：608583947
+ * 风骚的Michael 老师
  */
 public class SpringJmsReceiver {
 
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "classpath:META-INF/spring/service-jms.xml");
+        ClassPathXmlApplicationContext context=
+                new ClassPathXmlApplicationContext(
+                        "classpath:META-INF/spring/service-jms.xml");
 
         try {
             System.in.read();
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        JmsTemplate jmsTemplate = context.getBean("jmsTemplate", JmsTemplate.class);
-//        String message = (String) jmsTemplate.receiveAndConvert();
-//        System.out.println(message);
+
+        /*JmsTemplate jmsTemplate=(JmsTemplate) context.getBean("jmsTemplate");
+
+        String msg=(String)jmsTemplate.receiveAndConvert();
+
+        System.out.println(msg);*/
     }
 }

@@ -11,11 +11,8 @@
     <!--default-autowire="byName"-->
     <context:annotation-config/>
     <!--生成一个远程服务的调用代理-->
-    <dubbo:reference id="orderService" interface="com.funi.distributedcomputer.dubbo.order.IOrderService"
-                     protocol="hessian"
-                     version="1.0"/>
-    <!--生成一个远程服务的调用代理-->
-    <dubbo:reference id="orderService2" interface="com.funi.distributedcomputer.dubbo.order.IOrderService"
-                     protocol="dubbo"
-                     version="2.0"/>
+    <dubbo:reference id="orderServices"
+                     interface="com.funi.distributedcomputer.dubbo.order.IOrderService"
+                     protocol="dubbo">
+    </dubbo:reference>
 </beans>

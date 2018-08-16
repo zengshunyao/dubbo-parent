@@ -50,7 +50,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
             //todo 判断用户状态
             response.setAvatar(user.getAvatar());
             response.setMobile(user.getMobile());
-            response.setRealName(user.getRealName());
+            response.setRealName(user.getRealname());
             response.setSex(user.getSex());
 
             response.setCode(ResponseCodeEnum.SYS_SUCCESS.getCode());

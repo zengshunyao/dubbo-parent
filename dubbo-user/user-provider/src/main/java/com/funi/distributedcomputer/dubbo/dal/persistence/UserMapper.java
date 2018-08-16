@@ -24,4 +24,11 @@ public interface UserMapper {
      * @return
      */
     User getUserByUid(Integer uid);
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    int insertSelective(User user);
 }

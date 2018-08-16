@@ -47,7 +47,7 @@ public class UserQueryServiceImpl implements IUserQueryService {
             if (user != null) {
                 response.setAvatar(user.getAvatar());
                 response.setSex(user.getSex());
-                response.setRealName(user.getRealName());
+                response.setRealName(user.getRealname());
                 response.setMobile(user.getMobile());
                 return response;
             }
@@ -97,7 +97,7 @@ public class UserQueryServiceImpl implements IUserQueryService {
             if (user != null) {
                 response.setAvatar(user.getAvatar());
                 response.setSex(user.getSex());
-                response.setRealName(user.getRealName());
+                response.setRealName(user.getRealname());
                 response.setMobile(user.getMobile());
                 return response;
             }

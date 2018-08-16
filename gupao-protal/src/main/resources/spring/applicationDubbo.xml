@@ -11,9 +11,9 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
        default-autowire="byName">
 
-    <dubbo:application name="gupao-protal"  />
+    <dubbo:application name="gupao-protal"/>
     <dubbo:registry protocol="zookeeper" file="d:/dubbo.cache" group="dubbo-dev"
-                    address="192.168.11.140:2181,192.168.11.137:2181,192.168.11.138:2181"/>
+                    address="47.52.33.73:2181"/>
 
     <!--<import resource="classpath*:META-INF/client/order-customer.xml"/>-->
     <import resource="classpath*:META-INF/client/user-reference.xml"/>

@@ -13,6 +13,7 @@ public enum ResponseCodeEnum {
     USER_NOT_LOGIN("001006", "用户未登录"),
     USER_OR_PASSWORD_ERROR("001007", "用户不存在或帐号密码错误"),
     ACCESS_LIMITER("001008", "访问被限制"),
+    DATA_SAVE_ERROR("001009", "数据保存失败"),
     SYSTEM_BUSY("001099", "系统繁忙,请稍后重试");
 
     private final String code;
