@@ -41,7 +41,7 @@
 
     <bean name="userMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage"
-                  value="com.gupao.vip.mic.dubbo.dal.persistence"/>
+                  value="com.funi.distributedcomputer.dubbo.dal.persistence"/>
         <property name="sqlSessionFactory" ref="userSqlSessionFactory"/>
     </bean>
 

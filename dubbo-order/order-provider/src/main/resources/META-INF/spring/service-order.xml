@@ -9,9 +9,8 @@
 
 
     <!--服务发布的配置，需要暴露的服务接口-->
-    <dubbo:service interface="com.gupao.vip.mic.dubbo.order.IOrderServices" ref="orderService"
+    <dubbo:service interface="com.funi.distributedcomputer.dubbo.order.IOrderService" ref="orderService"
                    protocol="dubbo" timeout="3000"/>
-
 
 
 </beans>
