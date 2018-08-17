@@ -11,7 +11,8 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="userDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"
+    <bean id="userDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close"
           p:url="${datasource.user.url}"
           p:username="${datasource.user.username}"
           p:password="${datasource.user.password}"

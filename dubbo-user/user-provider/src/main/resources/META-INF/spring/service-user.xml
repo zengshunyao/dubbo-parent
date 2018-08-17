@@ -9,8 +9,8 @@
 
 
     <!--服务发布的配置，需要暴露的服务接口-->
-    <dubbo:service interface="com.funi.distributedcomputer.dubbo.user.IUserLoginService"
-                   ref="userLoginService" timeout="3000"/>
+    <dubbo:service interface="com.funi.distributedcomputer.dubbo.user.IUserCoreService"
+                   ref="userCoreService" timeout="3000"/>
 
     <dubbo:service interface="com.funi.distributedcomputer.dubbo.user.IUserQueryService"
                    ref="userQueryService" timeout="3000"/>

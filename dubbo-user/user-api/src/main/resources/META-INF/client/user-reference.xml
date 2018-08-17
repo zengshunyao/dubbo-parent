@@ -11,11 +11,9 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd" default-autowire="byName">
 
     <context:annotation-config/>
-    <!--用户登录-->
-    <dubbo:reference id="userLoginServices" interface="com.funi.distributedcomputer.dubbo.user.IUserLoginService"/>
     <!--用户查询-->
     <dubbo:reference id="userQueryServices" interface="com.funi.distributedcomputer.dubbo.user.IUserQueryService"/>
-    <!--用户注册-->
+    <!--用户注册 登录-->
     <dubbo:reference id="userCoreService" interface="com.funi.distributedcomputer.dubbo.user.IUserCoreService"/>
 
 </beans>

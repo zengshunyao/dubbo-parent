@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service("userQueryService")
 public class UserQueryServiceImpl implements IUserQueryService {
 
-    Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(UserQueryServiceImpl.class);
 
     @Autowired
     UserMapper userMapper;
