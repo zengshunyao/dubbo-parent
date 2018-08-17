@@ -12,7 +12,7 @@
         <property name="connectionFactory">
             <bean class="org.apache.activemq.ActiveMQConnectionFactory">
                 <property name="brokerURL">
-                    <value>tcp://192.168.11.140:61616</value>
+                    <value>tcp://47.52.33.73:61616</value>
                 </property>
             </bean>
         </property>
