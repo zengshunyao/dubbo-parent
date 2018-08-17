@@ -32,7 +32,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
     Logger logger = LoggerFactory.getLogger(UserCoreServiceImpl.class);
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     /**
      * 登录
@@ -89,7 +89,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
             User user = new User();
             user.setUsername(userRegisterRequest.getUsername());
             user.setPassword(userRegisterRequest.getPassword());
-            user.setStatus(Constants.FORZEN_USER_STATUS);
+            user.setStatus(Constants.USER_FORZEN_STATUS);
             user.setCreateTime(new Date());
 
             int effectRow = userMapper.insertSelective(user);
@@ -103,9 +103,8 @@ public class UserCoreServiceImpl implements IUserCoreService {
             return response;
         } catch (DuplicateKeyException e) {
             //TODO 用户名重复
-            e.printStackTrace();
         } catch (Exception e) {
-            ServiceException serviceException = (ServiceException) ExceptionUtil.handlerException4biz(e);
+            ServiceException serviceException = ExceptionUtil.handlerException4biz(e);
             response.setCode(serviceException.getErrorCode());
             response.setMsg(serviceException.getErrorMessage());
         } finally {

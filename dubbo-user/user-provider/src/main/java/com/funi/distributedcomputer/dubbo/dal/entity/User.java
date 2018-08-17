@@ -1,10 +1,13 @@
 package com.funi.distributedcomputer.dubbo.dal.entity;
 
+import com.alibaba.druid.support.monitor.annotation.MTable;
+
 import java.util.Date;
 
 /**
  *
  */
+@MTable(name = "user")
 public class User {
 
     private Integer id;

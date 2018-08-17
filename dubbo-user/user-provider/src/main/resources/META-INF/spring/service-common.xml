@@ -2,16 +2,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
        default-autowire="byName">
+    <!--1 引入属性文件，在配置中占位使用 -->
+    <context:property-placeholder location="classpath*:application.properties"/>
 
-    <context:property-placeholder location="classpath:application.properties"/>
-
-    <!--数据源-->
+    <!--2 配置Druid数据源-->
     <bean id="userDataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close"
           p:url="${datasource.user.url}"
@@ -33,20 +34,54 @@
           p:filters="${datasource.user.filters}">
     </bean>
 
+    <!--3 会话工厂bean sqlSessionFactoryBean -->
+    <!--spring和MyBatis完美整合-->
     <bean id="userSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据源 -->
         <property name="dataSource" ref="userDataSource"/>
-        <property name="typeAliasesPackage"
-                  value="com.funi.distributedcomputer.dubbo.dal.entity"/>
-        <property name="mapperLocations"
-                  value="classpath*:com/funi/distributedcomputer/dubbo/dal/persistence/*Mapper.xml"/>
+        <!-- 别名 -->
+        <!--<property name="typeAliasesPackage" value="com.funi.distributedcomputer.dubbo.dal.entity"/>-->
+        <!-- 具体指定mybatis-config.xml文件，可不配 -->
+        <!--<property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+
+        <!-- sql映射文件路径 -->
+        <!-- 自动扫描mapping.xml文件，**表示迭代查找 ,,也可在mybatis-config.xml中单独指定xml文件 -->
+        <property name="mapperLocations" value="classpath*:com/funi/distributedcomputer/dubbo/dal/persistence/*.xml"/>
     </bean>
 
-    <bean name="userMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage"
-                  value="com.funi.distributedcomputer.dubbo.dal.persistence"/>
-        <property name="sqlSessionFactory" ref="userSqlSessionFactory"/>
+    <!--采用org.mybatis.spring.mapper.MapperScannerConfigurer-->
+    <!--4 自动扫描对象关系映射 -->
+    <!--name="userMapperScannerConfigurer"-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 指定要自动扫描接口的基础包，实现接口 -->
+        <property name="basePackage" value="com.funi.distributedcomputer.dubbo.dal.persistence"/>
+        <!--<property name="basePackage" value="com/funi/distributedcomputer/dubbo/dal/persistence"/>-->
+        <!--指定会话工厂，如果当前上下文中只定义了一个则该属性可省去 -->
+        <!--因为会自动装配 SqlSessionFactory和SqlSessionTemplate-->
+        <!--所以没 有 必 要 去 指 定 SqlSessionFactory或 SqlSessionTemplate-->
+        <!--因此可省略不配置；-->
+        <!--但是,如果你使 用了一个 以上的 DataSource，那么自动装配可能会失效。-->
+        <!--这种 情况下，你可以使用sqlSessionFactoryBeanName或sqlSessionTemplateBeanName属性来设置正确的 bean名称来使用；-->
+        <property name="sqlSessionFactoryBeanName" value="userSqlSessionFactory"/>
     </bean>
 
-    <context:component-scan base-package="com.funi.distributedcomputer.dubbo.dal"/>
+    <!--5 声明式事务管理 -->
+    <!--定义事物管理器，由spring管理事务 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="userDataSource"/>
+    </bean>
+    <!--支持注解驱动的事务管理，指定事务管理器 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--6 容器自动扫描IOC组件  -->
+    <context:component-scan base-package="com.funi.distributedcomputer.dubbo.dal.persistence"/>
+
+    <!--7 aspectj支持自动代理实现AOP功能 -->
+    <!--<aop:aspectj-autoproxy/>-->
+
+    <!--8 注解驱动-->
+    <!--<context:annotation-config/>-->
+
+    <!--扫描服务-->
     <context:component-scan base-package="com.funi.distributedcomputer.dubbo.services"/>
 </beans>

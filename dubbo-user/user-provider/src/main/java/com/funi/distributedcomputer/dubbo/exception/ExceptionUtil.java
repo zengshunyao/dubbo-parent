@@ -6,7 +6,7 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.funi.distributedcomputer.dubbo.user.constants.ResponseCodeEnum;
 
-public class ExceptionUtil{
+public class ExceptionUtil {
 
     private static Logger logger = LoggerFactory.getLogger(ExceptionUtil.class);
 
@@ -16,14 +16,14 @@ public class ExceptionUtil{
      * @param e Exception
      * @return
      */
-    public static Exception handlerException4biz(Exception e) {
-        Exception ex = null;
+    public static ServiceException handlerException4biz(Exception e) {
+        ServiceException ex = null;
         if (!(e instanceof Exception)) {
             return null;
         }
         if (e instanceof ValidateException) {
             ex = new ServiceException(((ValidateException) e).getErrorCode(), ((ValidateException) e).getErrorMessage());
-        }else if (e instanceof Exception) {
+        } else if (e instanceof Exception) {
             ex = new ServiceException(ResponseCodeEnum.SYSTEM_BUSY.getCode(),
                     ResponseCodeEnum.SYSTEM_BUSY.getMsg());
         }

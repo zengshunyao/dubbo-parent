@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!--命名空间应该是对应接口的包名+接口名 -->
 <mapper namespace="com.funi.distributedcomputer.dubbo.dal.persistence.UserMapper">
-
     <sql id="Base_Column_List">
         id, username,password,realname,avatar,mobile,sex,status,create_time
     </sql>
-
     <!--通过用户名获得用户-->
     <select id="getUserByUserName"
             resultType="com.funi.distributedcomputer.dubbo.dal.entity.User"
@@ -15,7 +13,6 @@
         <include refid="Base_Column_List"/>
         from user where username=#{username}
     </select>
-
     <!--通过用户id获得用户信息-->
     <select id="getUserByUid"
             resultType="com.funi.distributedcomputer.dubbo.dal.entity.User"
@@ -24,10 +21,8 @@
         <include refid="Base_Column_List"/>
         from user where id=#{uid}
     </select>
-
     <!--添加用户-->
-    <insert id="insertSelective" parameterType="com.funi.distributedcomputer.dubbo.dal.entity.User"
-            keyColumn="id"
+    <insert id="insertSelective" parameterType="com.funi.distributedcomputer.dubbo.dal.entity.User" keyColumn="id"
             useGeneratedKeys="true">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
