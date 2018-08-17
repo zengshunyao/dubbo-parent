@@ -11,6 +11,7 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
+    <!--数据源-->
     <bean id="userDataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close"
           p:url="${datasource.user.url}"

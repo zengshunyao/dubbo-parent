@@ -25,6 +25,10 @@ public class User {
 
     private Date createTime;
 
+    public User() {
+        super();
+    }
+
     public Integer getId() {
         return id;
     }

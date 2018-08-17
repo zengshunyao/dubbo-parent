@@ -150,10 +150,10 @@
             $(this).parent().next("div").css("color", '#ccc');
 
         } else if (
-            /*$(this).val().substr(0, 3) != 138 && $(this).val().substr(0, 3) != 189
-            && $(this).val().substr(0, 3) != 139 && $(this).val().substr(0, 3) != 158
-            && $(this).val().substr(0, 3) != 188 && $(this).val().substr(0, 3) != 157
-            || $(this).val().length != 11*/
+                /*$(this).val().substr(0, 3) != 138 && $(this).val().substr(0, 3) != 189
+                 && $(this).val().substr(0, 3) != 139 && $(this).val().substr(0, 3) != 158
+                 && $(this).val().substr(0, 3) != 188 && $(this).val().substr(0, 3) != 157
+                 || $(this).val().length != 11*/
             !/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test($(this).val())
         ) {
             $(this).parent().next("div").text("手机号格式不正确");
@@ -182,12 +182,13 @@
         }
         //协议
         if ($("#xieyi")[0].checked) {
-            $("#password").val(MD5($("#password").val()));
+            console.log(MD5($("#password").val()));
             TOOLS.doPost({
-                username: $("#username").val(), password: $("#password").val(),
+                username: $("#username").val(),
+                password: MD5($("#password").val()),
                 mobile: $("#mobile").val()
             }, "#springUrl('/register.shtml')", function (response) {
-                alert(response.code);
+                alert(response.message);
             });
         } else {
             $("#xieyi").next().next().next(".tips").text("请勾选协议");
