@@ -25,7 +25,9 @@
         from user where id=#{uid}
     </select>
 
-    <insert id="insertSelective" parameterType="com.funi.distributedcomputer.dubbo.dal.entity.User" keyColumn="id"
+    <!--添加用户-->
+    <insert id="insertSelective" parameterType="com.funi.distributedcomputer.dubbo.dal.entity.User"
+            keyColumn="id"
             useGeneratedKeys="true">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">

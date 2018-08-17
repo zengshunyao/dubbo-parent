@@ -26,6 +26,7 @@ public interface UserMapper {
     User getUserByUid(Integer uid);
 
     /**
+     * 添加用户
      *
      * @param user
      * @return

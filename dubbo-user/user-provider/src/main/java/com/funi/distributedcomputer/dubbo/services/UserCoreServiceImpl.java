@@ -45,7 +45,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
         logger.info("begin UserCoreService.login,request:【" + userLoginRequest + "】");
         UserLoginResponse response = new UserLoginResponse();
         try {
-            beforeLoginValidate(userLoginRequest);
+            this.beforeLoginValidate(userLoginRequest);
 
             User user = userMapper.getUserByUserName(userLoginRequest.getUsername());
             if (user == null || !user.getPassword().equals(userLoginRequest.getPassword())) {
@@ -84,7 +84,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
 
         UserRegisterResponse response = new UserRegisterResponse();
         try {
-            beforeRegisterValidate(userRegisterRequest);
+            this.beforeRegisterValidate(userRegisterRequest);
 
             User user = new User();
             user.setUsername(userRegisterRequest.getUsername());
@@ -103,6 +103,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
             return response;
         } catch (DuplicateKeyException e) {
             //TODO 用户名重复
+            e.printStackTrace();
         } catch (Exception e) {
             ServiceException serviceException = (ServiceException) ExceptionUtil.handlerException4biz(e);
             response.setCode(serviceException.getErrorCode());
@@ -110,11 +111,12 @@ public class UserCoreServiceImpl implements IUserCoreService {
         } finally {
             logger.info("register response:【" + response + "】");
         }
-
         return response;
     }
 
     /**
+     * 注册校验
+     *
      * @param request
      */
     private void beforeRegisterValidate(UserRegisterRequest request) {
@@ -128,11 +130,13 @@ public class UserCoreServiceImpl implements IUserCoreService {
             throw new ValidateException("密码为空");
         }
         if (StringUtils.isEmpty(request.getMobile())) {
-            throw new ValidateException("密码为空");
+            throw new ValidateException("手机号码为空");
         }
     }
 
     /**
+     * 登录验证
+     *
      * @param request
      */
     private void beforeLoginValidate(UserLoginRequest request) {

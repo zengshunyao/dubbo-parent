@@ -34,7 +34,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <!-- 文件拷贝时的编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -117,10 +121,10 @@
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
         </dependency>
-         <!--<dependency>-->
-                <!--<groupId>org.apache.curator</groupId>-->
-                <!--<artifactId>curator-test</artifactId>-->
-         <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.curator</groupId>-->
+        <!--<artifactId>curator-test</artifactId>-->
+        <!--</dependency>-->
 
         <!--mybatis-->
         <dependency>
@@ -156,6 +160,10 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>org.slf4j</groupId>-->
         <!--<artifactId>slf4j-log4j12</artifactId>-->
@@ -187,7 +195,67 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <!-- 指定编码格式，否则在DOS下运行mvn compile命令时会出现莫名的错误，因为系统默认使用GBK编码 -->
                     <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <!-- 指定编码格式，否则在DOS下运行mvn命令时当发生文件资源copy时将使用系统默认使用GBK编码 -->
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- 打包源码，需要加入这个插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <!--测试有失败用例时，是否继续构建-->
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <!--是否跳过测试阶段，方式1-->
+                    <skipTests>true</skipTests>
+                    <!--是否跳过测试阶段，方式2-->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!--这个是普通java项目（非java web项目和其他特殊类型的java项目）package阶段默认绑定的插件，能够将编译好的class和资源打成jar包。-->
+                <!--常用配置1：打出可以运行的有主类的jar包-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <excludes>
+                        <!--打包时要排除的文件-->
+                        <exclude>agent.properties</exclude>　　　　
+                    </excludes>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <!--           <classpathPrefix>lib/</classpathPrefix>   -->
+                            <mainClass>com.funi.distributedcomputer.dubbo.main.Bootstrap</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

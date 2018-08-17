@@ -9,14 +9,21 @@ import java.io.Serializable;
  * 加群获取视频：608583947
  * 风骚的Michael 老师
  */
-public class UserRegisterRequest extends AbstractRequest implements Serializable{
+public class UserRegisterRequest extends AbstractRequest implements Serializable {
 
     private static final long serialVersionUID = -4807481139973253990L;
 
+    /**
+     * 登录用户名
+     */
     private String username;
-
+    /**
+     * 登录密码
+     */
     private String password;
-
+    /**
+     * 手机号码
+     */
     private String mobile;
 
     public static long getSerialVersionUID() {
