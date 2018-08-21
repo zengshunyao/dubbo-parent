@@ -29,7 +29,7 @@ public class JwtTokenUtil {
      */
     public static String generateToken(JwtInfo jwtInfo, int expire) {
         return Jwts.builder().claim(JwtConstants.JWT_KEY_USER_ID, jwtInfo.getUid())
-                .setExpiration(DateTime.now().plus(expire).toDate())
+                .setExpiration(DateTime.now().plusSeconds(expire).toDate())
                 .signWith(SignatureAlgorithm.HS256, getKeyInstance()).compact();
     }
 
@@ -40,8 +40,10 @@ public class JwtTokenUtil {
      * @return
      */
     public static JwtInfo getTokenInfo(String token) {
-        Jws<Claims> claimsJwts = Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(token);
-        Claims claims = claimsJwts.getBody();
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(getKeyInstance())
+                .parseClaimsJws(token);
+
+        Claims claims = claimsJws.getBody();
         return new JwtInfo(claims.get(JwtConstants.JWT_KEY_USER_ID).toString());
     }
 }

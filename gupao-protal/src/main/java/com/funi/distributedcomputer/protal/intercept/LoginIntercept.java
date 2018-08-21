@@ -28,9 +28,10 @@ public class LoginIntercept extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Object action = handlerMethod.getBean();
-        if (action instanceof BaseController) {
+        if (!(action instanceof BaseController)) {
             throw new Exception("异常");
         }
+
         BaseController baseController = (BaseController) action;
 
         if (isAnonymous(handlerMethod)) {
@@ -47,13 +48,15 @@ public class LoginIntercept extends HandlerInterceptorAdapter {
                 response.flushBuffer();
                 return false;
             }
-            response.sendRedirect("/login.shtml");
+            response.sendRedirect("login.shtml");
             return false;
         }
 
         CheckAuthRequest checkAuthRequest = new CheckAuthRequest();
         checkAuthRequest.setToken(accessToken);
+
         CheckAuthResponse checkAuthResponse = userCoreService.checkAuth(checkAuthRequest);
+
         if (ResponseCodeEnum.SYS_SUCCESS.getCode().equals(checkAuthResponse.getCode())) {
             baseController.setUid(checkAuthResponse.getUid());
             return true;

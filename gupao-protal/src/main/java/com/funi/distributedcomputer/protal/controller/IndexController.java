@@ -47,7 +47,8 @@ public class IndexController extends BaseController {
      */
     @GetMapping("/index")
     public String index(Model model) {
-        return "login";
+        System.out.println("index------------------");
+        return "index";
     }
 
     /**
@@ -56,6 +57,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @GetMapping("/login")
+    @Anonymous
     public String login() {
         return "login";
     }
@@ -68,17 +70,25 @@ public class IndexController extends BaseController {
     @PostMapping("/login")
     @Anonymous
     public ResponseEntity login(String txtUser, String txtPwd, HttpServletResponse response) {
-        UserLoginRequest request = new UserLoginRequest();
-        request.setUsername(txtUser);
-        request.setPassword(txtPwd);
+        ResponseData responseData = new ResponseData();
+        try {
+            UserLoginRequest request = new UserLoginRequest();
+            request.setUsername(txtUser);
+            request.setPassword(txtPwd);
 
-        UserLoginResponse userLoginResponse = userCoreService.login(request);
-        if (ResponseCodeEnum.SYS_SUCCESS.getCode().equals(userLoginResponse.getCode())) {
-            response.setHeader(HttpHeaders.SET_COOKIE,
-                    com.funi.distributedcomputer.protal.constants.Constants.ACCESS_TOKEN +
-                            "=" + userLoginResponse.getToken() + ";Path=/;HttpOnly");
+            UserLoginResponse userLoginResponse = userCoreService.login(request);
+            if (ResponseCodeEnum.SYS_SUCCESS.getCode().equals(userLoginResponse.getCode())) {
+                response.setHeader(HttpHeaders.SET_COOKIE,
+                        com.funi.distributedcomputer.protal.constants.Constants.ACCESS_TOKEN +
+                                "=" + userLoginResponse.getToken() + ";Path=/;HttpOnly");
+            }
+            responseData.setMessage(userLoginResponse.getMsg());
+            responseData.setCode(userLoginResponse.getCode());
+        } catch (Exception e) {
+            responseData.setMessage(ResponseEnum.FAILED.getMsg());
+            responseData.setCode(ResponseEnum.FAILED.getCode());
         }
-        return ResponseEntity.ok(userLoginResponse);
+        return ResponseEntity.ok(responseData);
     }
 
     /**
@@ -87,6 +97,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @GetMapping("/register")
+    @Anonymous
     public String register() {
         return "register";
     }
@@ -100,6 +111,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @PostMapping("/register")
+    @Anonymous
     public @ResponseBody
     ResponseData register(String username, String password, String mobile) {
         ResponseData data = new ResponseData();

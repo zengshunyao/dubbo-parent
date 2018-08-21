@@ -98,8 +98,10 @@ public class UserCoreServiceImpl implements IUserCoreService {
             return response;
         } catch (ExpiredJwtException e) {
             //todo
+            logger.error("error", e);
         } catch (SignatureException e) {
             //todo
+            logger.error("error", e);
         } catch (Exception e) {
             ServiceException serviceException = (ServiceException) ExceptionUtil.handlerException4biz(e);
             response.setCode(serviceException.getErrorCode());

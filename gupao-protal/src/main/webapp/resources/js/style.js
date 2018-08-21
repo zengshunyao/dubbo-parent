@@ -51,16 +51,28 @@ function cliLogin() {
     // 	$("#txtCode").focus();
     // 	return false;
     // }
-    $.ajax({
-        url: "/login.shtml",
-        type: 'POST',
-        data: {'txtUser': txtUser, 'txtPwd': MD5(txtPwd)},
-        success: function (data) {
-            if (data.code == '000000') {
-                location.href = "/index.shtml";
-            } else {
-                alert(data.msg);
-            }
+
+    // $.ajax({
+    //     url: "#springUrl('/login.shtml')",
+    //     type: 'POST',
+    //     data: {'txtUser': txtUser, 'txtPwd': MD5(txtPwd)},
+    //     success: function (data) {
+    //         if (data.code == '000000') {
+    //             location.href = "/index.shtml";
+    //         } else {
+    //             alert(data.msg);
+    //         }
+    //     }
+    // });
+
+    TOOLS.doPost({
+        'txtUser': txtUser,
+        'txtPwd': MD5(txtPwd)
+    }, "#springUrl('/login.shtml')", function (data) {
+        if (data.code == '000000') {
+            location.href = "index.shtml";
+        } else {
+            alert(data.msg);
         }
     });
     return false;

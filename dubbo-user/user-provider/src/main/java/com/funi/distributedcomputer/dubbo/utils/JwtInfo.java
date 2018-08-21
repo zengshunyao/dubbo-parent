@@ -3,9 +3,9 @@ package com.funi.distributedcomputer.dubbo.utils;
 public class JwtInfo {
     private String uid;
 
-    private String name;
 
-    public JwtInfo(String o) {
+    public JwtInfo(String uid) {
+        this.uid = uid;
     }
 
     public String getUid() {
@@ -16,11 +16,4 @@ public class JwtInfo {
         this.uid = uid;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

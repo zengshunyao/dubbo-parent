@@ -1,5 +1,7 @@
 package com.funi.distributedcomputer.protal.utils;
 
+import com.alibaba.dubbo.common.logger.Logger;
+import com.alibaba.dubbo.common.logger.LoggerFactory;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * Cookie工具类
  */
 public class CookieUtil {
+    static Logger logger = LoggerFactory.getLogger(CookieUtil.class);
 
     private CookieUtil() {
     }
@@ -51,11 +54,17 @@ public class CookieUtil {
      * @return
      */
     public static String getCookieValue(HttpServletRequest request, String cookieName) {
-        Cookie cookies[] = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(cookieName)) {
-                return cookie.getValue();
+        try {
+            Cookie cookies[] = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals(cookieName)) {
+                        return cookie.getValue();
+                    }
+                }
             }
+        } catch (Exception e) {
+            logger.error("error", e);
         }
         return null;
     }
