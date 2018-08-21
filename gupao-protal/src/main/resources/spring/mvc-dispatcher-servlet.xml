@@ -19,6 +19,15 @@
     <!-- 启用spring mvc 注解 -->
     <context:annotation-config/>
 
+    <!--mvc拦截-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.funi.distributedcomputer.protal.intercept.LoginIntercept"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <mvc:annotation-driven ignore-default-model-on-redirect="true">
         <!-- 编码转换 -->
         <mvc:message-converters>

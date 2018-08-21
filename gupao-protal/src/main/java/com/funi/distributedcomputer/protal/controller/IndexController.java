@@ -2,11 +2,16 @@ package com.funi.distributedcomputer.protal.controller;
 
 import com.funi.distributedcomputer.dubbo.user.IUserCoreService;
 import com.funi.distributedcomputer.dubbo.user.constants.ResponseCodeEnum;
+import com.funi.distributedcomputer.dubbo.user.dto.UserLoginRequest;
+import com.funi.distributedcomputer.dubbo.user.dto.UserLoginResponse;
 import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterRequest;
 import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterResponse;
+import com.funi.distributedcomputer.protal.controller.support.Anonymous;
 import com.funi.distributedcomputer.protal.controller.support.ResponseData;
 import com.funi.distributedcomputer.protal.controller.support.ResponseEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Controller;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 腾讯课堂搜索 咕泡学院
@@ -25,7 +31,7 @@ import javax.jms.Session;
  * 风骚的Michael 老师
  */
 @Controller
-public class IndexController {
+public class IndexController extends BaseController {
 
     @Autowired
     IUserCoreService userCoreService;
@@ -52,6 +58,27 @@ public class IndexController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    /**
+     * 登录页面
+     *
+     * @return
+     */
+    @PostMapping("/login")
+    @Anonymous
+    public ResponseEntity login(String txtUser, String txtPwd, HttpServletResponse response) {
+        UserLoginRequest request = new UserLoginRequest();
+        request.setUsername(txtUser);
+        request.setPassword(txtPwd);
+
+        UserLoginResponse userLoginResponse = userCoreService.login(request);
+        if (ResponseCodeEnum.SYS_SUCCESS.getCode().equals(userLoginResponse.getCode())) {
+            response.setHeader(HttpHeaders.SET_COOKIE,
+                    com.funi.distributedcomputer.protal.constants.Constants.ACCESS_TOKEN +
+                            "=" + userLoginResponse.getToken() + ";Path=/;HttpOnly");
+        }
+        return ResponseEntity.ok(userLoginResponse);
     }
 
     /**
