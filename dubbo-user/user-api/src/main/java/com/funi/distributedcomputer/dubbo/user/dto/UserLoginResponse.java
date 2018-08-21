@@ -20,6 +20,8 @@ public class UserLoginResponse extends AbstractResponse implements Serializable 
 
     private String sex;
 
+    private String token;
+
     public String getRealName() {
         return realName;
     }
@@ -52,6 +54,14 @@ public class UserLoginResponse extends AbstractResponse implements Serializable 
         this.sex = sex;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         return "UserLoginResponse{" +
@@ -59,6 +69,7 @@ public class UserLoginResponse extends AbstractResponse implements Serializable 
                 ", avatar='" + avatar + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", sex='" + sex + '\'' +
-                "} " + super.toString();
+                ", token='" + token + '\'' +
+                '}';
     }
 }

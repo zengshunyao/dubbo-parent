@@ -1,9 +1,6 @@
 package com.funi.distributedcomputer.dubbo.user;
 
-import com.funi.distributedcomputer.dubbo.user.dto.UserLoginRequest;
-import com.funi.distributedcomputer.dubbo.user.dto.UserLoginResponse;
-import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterRequest;
-import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterResponse;
+import com.funi.distributedcomputer.dubbo.user.dto.*;
 
 public interface IUserCoreService {
 
@@ -14,7 +11,7 @@ public interface IUserCoreService {
      * @param request
      * @return
      */
-    public UserRegisterResponse register(UserRegisterRequest request);
+    UserRegisterResponse register(UserRegisterRequest request);
 
     /**
      * 用户登录
@@ -23,4 +20,12 @@ public interface IUserCoreService {
      * @return
      */
     UserLoginResponse login(UserLoginRequest userLoginRequest);
+
+    /**
+     * 检查授权
+     *
+     * @param checkAuthRequest
+     * @return
+     */
+    CheckAuthResponse checkAuth(CheckAuthRequest checkAuthRequest);
 }

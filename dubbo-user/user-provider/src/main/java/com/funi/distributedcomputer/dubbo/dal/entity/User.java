@@ -28,6 +28,8 @@ public class User {
 
     private Date createTime;
 
+    private String token;
+
     public User() {
         super();
     }
@@ -102,6 +104,14 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

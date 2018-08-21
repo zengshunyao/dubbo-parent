@@ -10,10 +10,10 @@ import com.funi.distributedcomputer.dubbo.exception.ValidateException;
 import com.funi.distributedcomputer.dubbo.user.IUserCoreService;
 import com.funi.distributedcomputer.dubbo.user.constants.Constants;
 import com.funi.distributedcomputer.dubbo.user.constants.ResponseCodeEnum;
-import com.funi.distributedcomputer.dubbo.user.dto.UserLoginRequest;
-import com.funi.distributedcomputer.dubbo.user.dto.UserLoginResponse;
-import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterRequest;
-import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterResponse;
+import com.funi.distributedcomputer.dubbo.user.dto.*;
+import com.funi.distributedcomputer.dubbo.utils.JwtInfo;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -33,6 +33,8 @@ public class UserCoreServiceImpl implements IUserCoreService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
     /**
      * 登录
@@ -59,6 +61,10 @@ public class UserCoreServiceImpl implements IUserCoreService {
             response.setRealName(user.getRealname());
             response.setSex(user.getSex());
 
+            //todo 生成token
+            response.setToken(jwtTokenService.generateToken(
+                    new JwtInfo(user.getId().toString())));
+
             response.setCode(ResponseCodeEnum.SYS_SUCCESS.getCode());
             response.setMsg(ResponseCodeEnum.SYS_SUCCESS.getMsg());
             return response;
@@ -68,6 +74,38 @@ public class UserCoreServiceImpl implements IUserCoreService {
             response.setMsg(serviceException.getErrorMessage());
         } finally {
             logger.info("login response:【" + response + "】");
+        }
+        return response;
+    }
+
+    /**
+     * 检查授权
+     *
+     * @param checkAuthRequest
+     * @return
+     */
+    @Override
+    public CheckAuthResponse checkAuth(CheckAuthRequest checkAuthRequest) {
+        logger.info("begin UserCoreService.checkAuth,request:【" + checkAuthRequest + "】");
+        CheckAuthResponse response = new CheckAuthResponse();
+        try {
+            this.beforeCheckAuthValidate(checkAuthRequest);
+            JwtInfo jwtInfo = jwtTokenService.getInfoFromToken(checkAuthRequest.getToken());
+            response.setUid(jwtInfo.getUid());
+
+            response.setCode(ResponseCodeEnum.SYS_SUCCESS.getCode());
+            response.setMsg(ResponseCodeEnum.SYS_SUCCESS.getMsg());
+            return response;
+        } catch (ExpiredJwtException e) {
+            //todo
+        } catch (SignatureException e) {
+            //todo
+        } catch (Exception e) {
+            ServiceException serviceException = (ServiceException) ExceptionUtil.handlerException4biz(e);
+            response.setCode(serviceException.getErrorCode());
+            response.setMsg(serviceException.getErrorMessage());
+        } finally {
+            logger.info("checkAuth response:【" + response + "】");
         }
         return response;
     }
@@ -111,6 +149,20 @@ public class UserCoreServiceImpl implements IUserCoreService {
             logger.info("register response:【" + response + "】");
         }
         return response;
+    }
+
+    /**
+     * 授权验证
+     *
+     * @param request
+     */
+    private void beforeCheckAuthValidate(CheckAuthRequest request) {
+        if (null == request) {
+            throw new ValidateException("请求对象为空");
+        }
+        if (StringUtils.isEmpty(request.getToken())) {
+            throw new ValidateException("token为空");
+        }
     }
 
     /**
