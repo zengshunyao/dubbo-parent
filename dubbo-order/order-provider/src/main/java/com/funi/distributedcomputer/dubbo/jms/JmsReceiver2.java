@@ -9,7 +9,7 @@ import javax.jms.*;
  * 加群获取视频：608583947
  * 风骚的Michael 老师
  */
-public class JmsReceiver {
+public class JmsReceiver2 {
 
     public static void main(String[] args) {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("" +
@@ -31,7 +31,14 @@ public class JmsReceiver {
             for (int i = 0; i < 10; i++) {
                 TextMessage textMessage = (TextMessage) consumer.receive();
                 System.out.println(textMessage.getText());
+                if (i == 4) {
+                    textMessage.acknowledge();
+                }
             }
+
+            TextMessage textMessage = (TextMessage) consumer.receive();
+            System.out.println(textMessage.getText() + "--->" + textMessage.getStringProperty("key"));
+
 //            session.commit();
             session.close();
         } catch (JMSException e) {
