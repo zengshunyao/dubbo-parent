@@ -11,8 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Cookie工具类
  */
-public class CookieUtil {
-    static Logger logger = LoggerFactory.getLogger(CookieUtil.class);
+public final class CookieUtil {
+
+    private static Logger logger = LoggerFactory.getLogger(CookieUtil.class);
+
+    /**
+     * 区别异步请求和普通请求的header key
+     */
+    private static final String AJAX_HEAD_KEY = "x-requested-with";
+    private static final String AJAX_HEAD_VALUE = "XMLHttpRequest";
+
 
     private CookieUtil() {
     }
@@ -55,7 +63,7 @@ public class CookieUtil {
      */
     public static String getCookieValue(HttpServletRequest request, String cookieName) {
         try {
-            Cookie cookies[] = request.getCookies();
+            final Cookie cookies[] = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals(cookieName)) {
@@ -69,9 +77,15 @@ public class CookieUtil {
         return null;
     }
 
+    /**
+     * 是否是异步提交
+     *
+     * @param request
+     * @return
+     */
     public static Boolean isAjax(HttpServletRequest request) {
-        String xReq = request.getHeader("x-requested-with");
-        if (StringUtils.isNotBlank(xReq) && "XMLHttpRequest".equalsIgnoreCase(xReq)) {
+        final String xReq = request.getHeader(AJAX_HEAD_KEY);
+        if (StringUtils.isNotBlank(xReq) && AJAX_HEAD_VALUE.equalsIgnoreCase(xReq)) {
             // 是ajax异步请求
             return true;
         }
