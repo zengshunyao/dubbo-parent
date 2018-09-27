@@ -8,10 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenService {
 
+    /**
+     * 过期时长(单位：)
+     */
     @Value("${jwt.expire}")
     private int expire;
 
     /**
+     * 根据JwtInfo生成token
+     *
      * @param jwtInfo
      * @return
      */
@@ -20,6 +25,8 @@ public class JwtTokenService {
     }
 
     /**
+     * 从token获得JwtInfo
+     *
      * @param token
      * @return
      */

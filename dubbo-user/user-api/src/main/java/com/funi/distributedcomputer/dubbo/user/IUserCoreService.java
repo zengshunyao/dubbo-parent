@@ -11,7 +11,7 @@ public interface IUserCoreService {
      * @param request
      * @return
      */
-    UserRegisterResponse register(UserRegisterRequest request);
+    UserRegisterResponse register(final UserRegisterRequest request);
 
     /**
      * 用户登录
@@ -19,7 +19,7 @@ public interface IUserCoreService {
      * @param userLoginRequest
      * @return
      */
-    UserLoginResponse login(UserLoginRequest userLoginRequest);
+    UserLoginResponse login(final UserLoginRequest userLoginRequest);
 
     /**
      * 检查授权
@@ -27,5 +27,5 @@ public interface IUserCoreService {
      * @param checkAuthRequest
      * @return
      */
-    CheckAuthResponse checkAuth(CheckAuthRequest checkAuthRequest);
+    CheckAuthResponse checkAuth(final CheckAuthRequest checkAuthRequest);
 }
