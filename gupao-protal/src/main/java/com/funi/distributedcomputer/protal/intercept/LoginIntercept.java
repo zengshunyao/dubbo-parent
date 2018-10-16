@@ -10,6 +10,8 @@ import com.funi.distributedcomputer.protal.controller.BaseController;
 import com.funi.distributedcomputer.protal.controller.support.Anonymous;
 import com.funi.distributedcomputer.protal.utils.CookieUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -20,26 +22,32 @@ import java.lang.reflect.Method;
 
 public class LoginIntercept extends HandlerInterceptorAdapter {
 
+    private final Logger logger = LoggerFactory.getLogger(LoginIntercept.class);
 
     @Autowired
     IUserCoreService userCoreService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Object action = handlerMethod.getBean();
-        if (!(action instanceof BaseController)) {
+        //1.封装参数
+        final HandlerMethod handlerMethod = (HandlerMethod) handler;
+        final Object controller = handlerMethod.getBean();
+        if (!(controller instanceof BaseController)) {
             throw new Exception("异常");
         }
 
-        BaseController baseController = (BaseController) action;
-
-        if (isAnonymous(handlerMethod)) {
+        //2.检查是否可匿名访问
+        if (this.isAnonymous(handlerMethod)) {
             return true;
         }
-        String accessToken = CookieUtil.getCookieValue(request, Constants.ACCESS_TOKEN);
-        //没有登录的情况下
+        //3.检查是否登录
+        final String accessToken = CookieUtil.getCookieValue(request, Constants.ACCESS_TOKEN);
+        //3.1没有token的情况下
         if (StringUtils.isEmpty(accessToken)) {
+            if (response.isCommitted()) {
+                logger.warn("异常：已经输出！");
+            }
+            //异步提交
             if (CookieUtil.isAjax(request)) {
                 JSONObject object = new JSONObject();
                 object.put("code", "-1");
@@ -48,30 +56,54 @@ public class LoginIntercept extends HandlerInterceptorAdapter {
                 response.flushBuffer();
                 return false;
             }
-            response.sendRedirect("login.shtml");
+            //普通表单提交
+            // 重定向登录页面
+            response.sendRedirect(Constants.LOGIN_INDEX);
             return false;
         }
 
-        CheckAuthRequest checkAuthRequest = new CheckAuthRequest();
+        //3.2存在token，则检查登录状态
+        //3.2.1请求服务检查登录状态
+        final CheckAuthRequest checkAuthRequest = new CheckAuthRequest();
         checkAuthRequest.setToken(accessToken);
 
-        CheckAuthResponse checkAuthResponse = userCoreService.checkAuth(checkAuthRequest);
-
+        final CheckAuthResponse checkAuthResponse = userCoreService.checkAuth(checkAuthRequest);
+        //3.2.2根据检查结果 分别处理
         if (ResponseCodeEnum.SYS_SUCCESS.getCode().equals(checkAuthResponse.getCode())) {
+            final BaseController baseController = (BaseController) controller;
             baseController.setUid(checkAuthResponse.getUid());
-            return true;
+            return super.preHandle(request, response, handler);
+//            return true;
         }
         return false;
-//        return super.preHandle(request, response, handler);
     }
 
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        //处理完成清理线程栈的user对象
+        final HandlerMethod handlerMethod = (HandlerMethod) handler;
+        final Object controller = handlerMethod.getBean();
+        if (!(controller instanceof BaseController)) {
+            throw new Exception("异常");
+        }
+        final BaseController baseController = (BaseController) controller;
+        baseController.clearUid();
+        super.afterCompletion(request, response, handler, ex);
+    }
+
+    /**
+     * 是否允许匿名访问
+     *
+     * @param handlerMethod
+     * @return
+     */
     private boolean isAnonymous(HandlerMethod handlerMethod) {
-        Object action = handlerMethod.getBean();
-        Class<?> clazz = action.getClass();
+        final Object controller = handlerMethod.getBean();
+        final Class<?> clazz = controller.getClass();
         if (null != clazz.getAnnotation(Anonymous.class)) {
             return true;
         }
-        Method method = handlerMethod.getMethod();
+        final Method method = handlerMethod.getMethod();
         return method.getAnnotation(Anonymous.class) != null;
     }
 }

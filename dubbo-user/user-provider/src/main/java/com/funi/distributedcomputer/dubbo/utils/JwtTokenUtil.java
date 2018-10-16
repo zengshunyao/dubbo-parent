@@ -1,6 +1,9 @@
 package com.funi.distributedcomputer.dubbo.utils;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.joda.time.DateTime;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -15,8 +18,8 @@ public class JwtTokenUtil {
      * @return
      */
     private static Key getKeyInstance() {
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-        byte[] dc = DatatypeConverter.parseBase64Binary("funi-user");
+        final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+        final byte[] dc = DatatypeConverter.parseBase64Binary("funi-user");
         return new SecretKeySpec(dc, signatureAlgorithm.getJcaName());
     }
 
@@ -40,10 +43,10 @@ public class JwtTokenUtil {
      * @return
      */
     public static JwtInfo getTokenInfo(String token) {
-        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(getKeyInstance())
+        final Jws<Claims> claimsJws = Jwts.parser().setSigningKey(getKeyInstance())
                 .parseClaimsJws(token);
 
-        Claims claims = claimsJws.getBody();
+        final Claims claims = claimsJws.getBody();
         return new JwtInfo(claims.get(JwtConstants.JWT_KEY_USER_ID).toString());
     }
 }

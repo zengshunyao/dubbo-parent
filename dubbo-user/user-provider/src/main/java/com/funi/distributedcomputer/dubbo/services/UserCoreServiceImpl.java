@@ -43,13 +43,13 @@ public class UserCoreServiceImpl implements IUserCoreService {
      * @return
      */
     @Override
-    public UserLoginResponse login(UserLoginRequest userLoginRequest) {
+    public UserLoginResponse login(final UserLoginRequest userLoginRequest) {
         logger.info("begin UserCoreService.login,request:【" + userLoginRequest + "】");
-        UserLoginResponse response = new UserLoginResponse();
+        final UserLoginResponse response = new UserLoginResponse();
         try {
             this.beforeLoginValidate(userLoginRequest);
 
-            User user = userMapper.getUserByUserName(userLoginRequest.getUsername());
+            final User user = userMapper.getUserByUserName(userLoginRequest.getUsername());
             if (user == null || !user.getPassword().equals(userLoginRequest.getPassword())) {
                 response.setCode(ResponseCodeEnum.USER_OR_PASSWORD_ERROR.getCode());
                 response.setMsg(ResponseCodeEnum.USER_OR_PASSWORD_ERROR.getMsg());
@@ -85,7 +85,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
      * @return
      */
     @Override
-    public CheckAuthResponse checkAuth(CheckAuthRequest checkAuthRequest) {
+    public CheckAuthResponse checkAuth(final CheckAuthRequest checkAuthRequest) {
         logger.info("begin UserCoreService.checkAuth,request:【" + checkAuthRequest + "】");
         CheckAuthResponse response = new CheckAuthResponse();
         try {
@@ -119,7 +119,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
      * @return
      */
     @Override
-    public UserRegisterResponse register(UserRegisterRequest userRegisterRequest) {
+    public UserRegisterResponse register(final UserRegisterRequest userRegisterRequest) {
         logger.info("begin UserCoreService.register,request:【" + userRegisterRequest + "】");
 
         UserRegisterResponse response = new UserRegisterResponse();
@@ -158,7 +158,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
      *
      * @param request
      */
-    private void beforeCheckAuthValidate(CheckAuthRequest request) {
+    private void beforeCheckAuthValidate(final CheckAuthRequest request) {
         if (null == request) {
             throw new ValidateException("请求对象为空");
         }
@@ -172,7 +172,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
      *
      * @param request
      */
-    private void beforeRegisterValidate(UserRegisterRequest request) {
+    private void beforeRegisterValidate(final UserRegisterRequest request) {
         if (null == request) {
             throw new ValidateException("请求对象为空");
         }
@@ -192,7 +192,7 @@ public class UserCoreServiceImpl implements IUserCoreService {
      *
      * @param request
      */
-    private void beforeLoginValidate(UserLoginRequest request) {
+    private void beforeLoginValidate(final UserLoginRequest request) {
         if (null == request) {
             throw new ValidateException("请求对象为空");
         }

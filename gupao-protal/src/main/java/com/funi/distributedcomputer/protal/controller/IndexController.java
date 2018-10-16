@@ -6,6 +6,7 @@ import com.funi.distributedcomputer.dubbo.user.dto.UserLoginRequest;
 import com.funi.distributedcomputer.dubbo.user.dto.UserLoginResponse;
 import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterRequest;
 import com.funi.distributedcomputer.dubbo.user.dto.UserRegisterResponse;
+import com.funi.distributedcomputer.protal.constants.Constants;
 import com.funi.distributedcomputer.protal.controller.support.Anonymous;
 import com.funi.distributedcomputer.protal.controller.support.ResponseData;
 import com.funi.distributedcomputer.protal.controller.support.ResponseEnum;
@@ -29,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
  * 腾讯课堂搜索 咕泡学院
  * 加群获取视频：608583947
  * 风骚的Michael 老师
+ *
+ * @author zengshunyao
  */
 @Controller
 public class IndexController extends BaseController {
@@ -79,7 +82,7 @@ public class IndexController extends BaseController {
             UserLoginResponse userLoginResponse = userCoreService.login(request);
             if (ResponseCodeEnum.SYS_SUCCESS.getCode().equals(userLoginResponse.getCode())) {
                 response.setHeader(HttpHeaders.SET_COOKIE,
-                        com.funi.distributedcomputer.protal.constants.Constants.ACCESS_TOKEN +
+                        Constants.ACCESS_TOKEN +
                                 "=" + userLoginResponse.getToken() + ";Path=/;HttpOnly");
             }
             responseData.setMessage(userLoginResponse.getMsg());
