@@ -9,6 +9,9 @@
        http://www.springframework.org/schema/context/spring-context-4.3.xsd"
        default-autowire="byName">
 
+    <context:annotation-config/>
+    <context:component-scan base-package="com.funi.distributedcomputer.dubbo.order"/>
+
     <context:property-placeholder location="classpath:application.properties"/>
 
     <bean id="userDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"

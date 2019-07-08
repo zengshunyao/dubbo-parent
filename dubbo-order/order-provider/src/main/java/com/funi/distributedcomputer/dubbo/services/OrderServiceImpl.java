@@ -8,11 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
-/**
- * 腾讯课堂搜索 咕泡学院
- * 加群获取视频：608583947
- * 风骚的Michael 老师
- */
 @Service(value = "orderService")
 public class OrderServiceImpl implements IOrderService {
 
