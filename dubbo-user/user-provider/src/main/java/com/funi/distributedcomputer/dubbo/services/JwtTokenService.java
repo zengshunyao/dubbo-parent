@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class JwtTokenService {
 
     /**
-     * 过期时长(单位：)
+     * 过期时长(单位：秒)
      */
     @Value("${jwt.expire}")
     private int expire;
@@ -31,6 +31,6 @@ public class JwtTokenService {
      * @return
      */
     public JwtInfo getInfoFromToken(String token) {
-        return JwtTokenUtil.getTokenInfo(token);
+        return JwtTokenUtil.parseTokenInfo(token);
     }
 }

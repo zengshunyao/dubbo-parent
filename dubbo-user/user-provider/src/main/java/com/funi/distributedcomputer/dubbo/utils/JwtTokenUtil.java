@@ -17,7 +17,7 @@ public class JwtTokenUtil {
     /**
      * @return
      */
-    private static Key getKeyInstance() {
+    private final static Key getKeyInstance() {
         final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         final byte[] dc = DatatypeConverter.parseBase64Binary("funi-user");
         return new SecretKeySpec(dc, signatureAlgorithm.getJcaName());
@@ -26,23 +26,23 @@ public class JwtTokenUtil {
     /**
      * 生成token的方法
      *
-     * @param jwtInfo
-     * @param expire
+     * @param jwtInfo jwt信息
+     * @param expire  过期时间
      * @return
      */
-    public static String generateToken(JwtInfo jwtInfo, int expire) {
+    public static String generateToken(final JwtInfo jwtInfo, final int expire) {
         return Jwts.builder().claim(JwtConstants.JWT_KEY_USER_ID, jwtInfo.getUid())
                 .setExpiration(DateTime.now().plusSeconds(expire).toDate())
                 .signWith(SignatureAlgorithm.HS256, getKeyInstance()).compact();
     }
 
     /**
-     * 根据token获得token中的信息
+     * 根据token解析token中的信息
      *
      * @param token
      * @return
      */
-    public static JwtInfo getTokenInfo(String token) {
+    public static JwtInfo parseTokenInfo(final String token) {
         final Jws<Claims> claimsJws = Jwts.parser().setSigningKey(getKeyInstance())
                 .parseClaimsJws(token);
 

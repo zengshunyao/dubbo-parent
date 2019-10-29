@@ -33,82 +33,6 @@ public class UserCoreServiceImpl implements IUserCoreService {
     private JwtTokenService jwtTokenService;
 
     /**
-     * 登录
-     *
-     * @param userLoginRequest
-     * @return
-     */
-    @Override
-    public UserLoginResponse login(final UserLoginRequest userLoginRequest) {
-        logger.info("begin UserCoreService.login,request:【" + userLoginRequest + "】");
-        final UserLoginResponse response = new UserLoginResponse();
-        try {
-            this.beforeLoginValidate(userLoginRequest);
-
-            final User user = userMapper.getUserByUserName(userLoginRequest.getUsername());
-            if (user == null || !user.getPassword().equals(userLoginRequest.getPassword())) {
-                response.setCode(ResponseCodeEnum.USER_OR_PASSWORD_ERROR.getCode());
-                response.setMsg(ResponseCodeEnum.USER_OR_PASSWORD_ERROR.getMsg());
-                return response;
-            }
-            //todo 判断用户状态
-            response.setAvatar(user.getAvatar());
-            response.setMobile(user.getMobile());
-            response.setRealName(user.getRealname());
-            response.setSex(user.getSex());
-
-            //todo 生成token
-            response.setToken(jwtTokenService.generateToken(
-                    new JwtInfo(user.getId().toString())));
-
-            response.setCode(ResponseCodeEnum.SYS_SUCCESS.getCode());
-            response.setMsg(ResponseCodeEnum.SYS_SUCCESS.getMsg());
-            return response;
-        } catch (Exception e) {
-            ServiceException serviceException = (ServiceException) ExceptionUtil.handlerException4biz(e);
-            response.setCode(serviceException.getErrorCode());
-            response.setMsg(serviceException.getErrorMessage());
-        } finally {
-            logger.info("login response:【" + response + "】");
-        }
-        return response;
-    }
-
-    /**
-     * 检查授权
-     *
-     * @param checkAuthRequest
-     * @return
-     */
-    @Override
-    public CheckAuthResponse checkAuth(final CheckAuthRequest checkAuthRequest) {
-        logger.info("begin UserCoreService.checkAuth,request:【" + checkAuthRequest + "】");
-        CheckAuthResponse response = new CheckAuthResponse();
-        try {
-            this.beforeCheckAuthValidate(checkAuthRequest);
-            JwtInfo jwtInfo = jwtTokenService.getInfoFromToken(checkAuthRequest.getToken());
-            response.setUid(jwtInfo.getUid());
-
-            response.setCode(ResponseCodeEnum.SYS_SUCCESS.getCode());
-            response.setMsg(ResponseCodeEnum.SYS_SUCCESS.getMsg());
-            return response;
-        } catch (ExpiredJwtException e) {
-            //todo
-            logger.error("error", e);
-        } catch (SignatureException e) {
-            //todo
-            logger.error("error", e);
-        } catch (Exception e) {
-            ServiceException serviceException = (ServiceException) ExceptionUtil.handlerException4biz(e);
-            response.setCode(serviceException.getErrorCode());
-            response.setMsg(serviceException.getErrorMessage());
-        } finally {
-            logger.info("checkAuth response:【" + response + "】");
-        }
-        return response;
-    }
-
-    /**
      * 注册
      *
      * @param userRegisterRequest
@@ -145,6 +69,82 @@ public class UserCoreServiceImpl implements IUserCoreService {
             response.setMsg(serviceException.getErrorMessage());
         } finally {
             logger.info("register response:【" + response + "】");
+        }
+        return response;
+    }
+
+    /**
+     * 登录
+     *
+     * @param userLoginRequest
+     * @return
+     */
+    @Override
+    public UserLoginResponse login(final UserLoginRequest userLoginRequest) {
+        logger.info("begin UserCoreService.login,request:【" + userLoginRequest + "】");
+        final UserLoginResponse response = new UserLoginResponse();
+        try {
+            this.beforeLoginValidate(userLoginRequest);
+
+            final User user = userMapper.getUserByUserName(userLoginRequest.getUsername());
+            if (user == null || !user.getPassword().equals(userLoginRequest.getPassword())) {
+                response.setCode(ResponseCodeEnum.USER_OR_PASSWORD_ERROR.getCode());
+                response.setMsg(ResponseCodeEnum.USER_OR_PASSWORD_ERROR.getMsg());
+                return response;
+            }
+            //todo 判断用户状态
+            response.setAvatar(user.getAvatar());
+            response.setMobile(user.getMobile());
+            response.setRealName(user.getRealname());
+            response.setSex(user.getSex());
+
+            //todo 生成token
+            response.setToken(jwtTokenService.generateToken(
+                    new JwtInfo(user.getId().toString())));
+
+            response.setCode(ResponseCodeEnum.SYS_SUCCESS.getCode());
+            response.setMsg(ResponseCodeEnum.SYS_SUCCESS.getMsg());
+            return response;
+        } catch (Exception e) {
+            ServiceException serviceException = ExceptionUtil.handlerException4biz(e);
+            response.setCode(serviceException.getErrorCode());
+            response.setMsg(serviceException.getErrorMessage());
+        } finally {
+            logger.info("login response:【" + response + "】");
+        }
+        return response;
+    }
+
+    /**
+     * 检查授权
+     *
+     * @param checkAuthRequest
+     * @return
+     */
+    @Override
+    public CheckAuthResponse checkAuth(final CheckAuthRequest checkAuthRequest) {
+        logger.info("begin UserCoreService.checkAuth,request:【" + checkAuthRequest + "】");
+        CheckAuthResponse response = new CheckAuthResponse();
+        try {
+            this.beforeCheckAuthValidate(checkAuthRequest);
+            JwtInfo jwtInfo = jwtTokenService.getInfoFromToken(checkAuthRequest.getToken());
+            response.setUid(jwtInfo.getUid());
+
+            response.setCode(ResponseCodeEnum.SYS_SUCCESS.getCode());
+            response.setMsg(ResponseCodeEnum.SYS_SUCCESS.getMsg());
+            return response;
+        } catch (ExpiredJwtException e) {
+            //todo
+            logger.error("error", e);
+        } catch (SignatureException e) {
+            //todo
+            logger.error("error", e);
+        } catch (Exception e) {
+            ServiceException serviceException = ExceptionUtil.handlerException4biz(e);
+            response.setCode(serviceException.getErrorCode());
+            response.setMsg(serviceException.getErrorMessage());
+        } finally {
+            logger.info("checkAuth response:【" + response + "】");
         }
         return response;
     }

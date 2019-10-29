@@ -3,8 +3,6 @@ package com.funi.distributedcomputer.dubbo.user;
 import com.funi.distributedcomputer.dubbo.user.dto.*;
 
 public interface IUserCoreService {
-
-
     /**
      * 用户注册
      *
